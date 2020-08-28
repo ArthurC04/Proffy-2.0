@@ -2,6 +2,7 @@ import { getRepository } from 'typeorm';
 
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
+import AppError from '../Errors/AppError';
 import User from '../models/User';
 
 import authConfig from '../config/auth';
@@ -25,20 +26,20 @@ class CreateUserService {
     });
 
     if (!user) {
-      throw new Error('Incorrect email/password');
+      throw new AppError('Incorrect email/password', 401);
     }
 
     const passwordMatched = await compare(password, user.password);
 
     if (!passwordMatched) {
-      throw new Error('Incorrect email/password');
+      throw new AppError('Incorrect email/password', 401);
     }
 
     const { secret, expiresIn } = authConfig.jwt;
 
     const token = sign({}, secret, {
       subject: user.id,
-      expiresIn: authConfig.jwt.expiresIn,
+      expiresIn,
     });
 
     return { user, token };
