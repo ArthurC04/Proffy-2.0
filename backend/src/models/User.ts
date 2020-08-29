@@ -17,6 +17,12 @@ class User {
   email: string;
 
   @Column()
+  biography: string;
+
+  @Column()
+  whatsapp: string;
+
+  @Column()
   password: string;
 
   @Column()

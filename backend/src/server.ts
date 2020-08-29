@@ -3,7 +3,7 @@ import 'express-async-errors';
 
 import cors from 'cors';
 import routes from './routes';
-import AppError from './Errors/AppError';
+import AppError from './errors/AppError';
 
 import './database';
 
